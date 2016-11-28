@@ -1,0 +1,427 @@
+<html>
+   <head>
+      <title>The Material Design Lite Example</title>
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-pink.min.css">
+      <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
+	  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0-rc.2/angular.min.js"></script>
+	   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.0-rc.2/angular-route.js"></script>
+	   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.0-rc.2/angular-messages.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+	   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.0-rc.2/angular-sanitize.min.js"></script>
+<link rel='stylesheet prefetch' href='modal/mdl-jquery-modal-dialog.css'>
+<script src="modal/mdl-jquery-modal-dialog.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.material.min.css">
+	   <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+       <script src="https://cdn.datatables.net/1.10.12/js/dataTables.material.min.js"></script>
+
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	  <base href="/patient/"/>
+      <style>
+#snackbar {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    bottom: 30px;
+    font-size: 17px;
+}
+
+#snackbar.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;} 
+    to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;} 
+    to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}
+/*Disable MDL validation styles*/
+
+.mdl-textfield.is-invalid .mdl-textfield__input {
+		border-bottom: 1px solid rgba(0, 0, 0, .12);
+}
+
+
+.mdl-textfield--floating-label.is-invalid .mdl-textfield__label {
+		color: rgba(0, 0, 0, .5);
+}
+
+.mdl-textfield--floating-label.is-focused .mdl-textfield__label,
+.mdl-textfield--floating-label.is-dirty .mdl-textfield__label {
+		color: rgb(63, 81, 181);
+}
+
+.mdl-textfield.is-invalid .mdl-textfield__label:after {
+		background-color: rgb(63, 81, 181);
+}
+/*Validation styles based on MDL*/
+
+.ng-invalid.ng-invalid.ng-touched {
+		box-shadow: none;
+}
+
+.ng-invalid.ng-invalid.ng-touched + label {
+		
+	
+}
+
+.ng-invalid.ng-invalid.ng-touched + label:after {
+		background-color: rgb(222, 50, 38);
+}.selectize-dropdown .mdl-textfield__input{
+	    border-color: #d0d0d0;
+}
+
+.ng-invalid.ng-invalid.ng-touched ~ .mdl-tooltip--validation {
+		background-color: rgb(222, 50, 38);
+}
+
+.ng-invalid.ng-invalid.ng-touched.ng-dirty:focus {
+		border-color: rgb(255, 193, 7);
+		box-shadow: none;
+}
+
+.ng-invalid.ng-invalid.ng-touched.ng-dirty:focus + label {
+		color: rgb(255, 193, 7);
+		font-size: 12px;
+}
+
+.ng-invalid.ng-invalid.ng-touched.ng-dirty:focus + label:after {
+		background-color: rgb(255, 193, 7);
+}
+
+.ng-invalid.ng-invalid.ng-touched.ng-dirty:focus ~ .mdl-tooltip--validation {
+		background-color: rgb(255, 193, 7);
+}
+
+.ng-invalid.ng-touched:not(:focus) + label::before {
+		font-weight: normal;
+		font-style: normal;
+		font-size: 24px;
+		/* Preferred icon size */
+		
+		display: inline-block;
+		width: 1em;
+		height: 1em;
+		line-height: 1;
+		text-transform: none;
+		letter-spacing: normal;
+		word-wrap: normal;
+		/* Support for all WebKit browsers. */
+		
+		-webkit-font-smoothing: antialiased;
+		/* Support for Safari and Chrome. */
+		
+		text-rendering: optimizeLegibility;
+		/* Support for Firefox. */
+		
+		-moz-osx-font-smoothing: grayscale;
+		/* Support for IE. */
+		
+		font-feature-settings: 'liga';
+		 content: '\f12a';
+   		font-family: FontAwesome;
+		position: absolute;
+		right: 0;
+		bottom: 20px;
+}
+
+.ng-valid.ng-touched:not(:focus) + label::before {
+		font-family: 'Material Icons';
+		font-weight: normal;
+		font-style: normal;
+		font-size: 24px;
+		/* Preferred icon size */
+		
+		display: inline-block;
+		width: 1em;
+		height: 1em;
+		line-height: 1;
+		text-transform: none;
+		letter-spacing: normal;
+		word-wrap: normal;
+		/* Support for all WebKit browsers. */
+		
+		-webkit-font-smoothing: antialiased;
+		/* Support for Safari and Chrome. */
+		
+		text-rendering: optimizeLegibility;
+		/* Support for Firefox. */
+		
+		-moz-osx-font-smoothing: grayscale;
+		/* Support for IE. */
+		
+	content: '\f00c';
+   		font-family: FontAwesome;
+		position: absolute;
+		right: 0;
+		bottom: 20px;
+}
+/*Basic styles*/
+
+.list-unstyled {
+		padding-left: 0;
+		list-style: none;
+}
+.mdl-textfield--floating-label.is-invalid .mdl-textfield__label{
+font-size:16px;	
+}
+</style>
+  </head>
+  <body ng-app="myApp">
+      <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer">
+         <div ng-controller="main" class="mdl-layout__drawer">
+            <span  class="mdl-layout-title">Naveen App</span>
+            <nav class="mdl-navigation">
+               <a ng-click="route('reg')" class="mdl-navigation__link" href="">Add Patient</a>
+               <a  ng-click="route('list')" class="mdl-navigation__link" href="">Patient List</a>
+               <a ng-click="route('about')"   class="mdl-navigation__link" href="">About</a>
+            </nav>
+         </div>
+         <main class="mdl-layout__content">
+            <div id="content" class="page-content" ng-view  style="padding:10px;background:#e0e0e0!important">Hello World!</div>
+         </main>
+      </div>
+	  
+	  <!--------------------------->
+	  
+	  <script>
+var app = angular.module('myApp', ['ngRoute','ngMessages','fieldMatch']);
+
+//Field Match directive
+
+angular.module('fieldMatch', [])
+		.directive('fieldMatch', ["$parse", function($parse) {
+				return {
+						require: 'ngModel',
+						link: function(scope, elem, attrs, ctrl) {
+								var me = $parse(attrs.ngModel);
+								var matchTo = $parse(attrs.fieldMatch);
+								scope.$watchGroup([me, matchTo], function(newValues, oldValues) {
+										ctrl.$setValidity('fieldmatch', me(scope) === matchTo(scope));
+								}, true);
+						}
+				}
+		}]);
+		/////////////////////////////////////////
+		
+		
+		
+		///////////////////////////////////////
+//Run material design lite
+app.run(function($rootScope, $location, $timeout) {
+		$rootScope.$on('$viewContentLoaded', function(event) {
+			
+						componentHandler.upgradeAllRegistered();
+		});
+});
+// create angular controller
+
+            app.config(function($routeProvider, $locationProvider) {
+                   $locationProvider.html5Mode(true);
+				    $routeProvider
+        .when('/', {
+            templateUrl : 'pg/reg',
+            controller  : 'loginCtrl'
+        }).when('/list', {
+            templateUrl : 'pg/reg2',
+            controller  : 'step2'
+        }).when('/about', {
+            templateUrl : 'pg/reg3',
+            controller  : 'step3'
+        }).
+otherwise({redirectTo : "/"});
+            });
+	
+app.controller('main', function ($scope, $http, $location, $window
+) {
+  $scope.message = 'hiiiiiiii';
+
+	
+ $scope.route = function (step) {
+
+ $location.path( step,false);
+ }
+
+
+ 
+});
+
+		
+app.controller('step2', function ($scope, $http,$location, $window) {
+  $scope.message = 'hiiiiiiii';
+  var ccoun=2;
+ $scope.friends = [{name:'John', phone:'555-1276'},
+                         {name:'Mary', phone:'800-BIG-MARY'},
+                         {name:'Mike', phone:'555-4321'},
+                         {name:'Adam', phone:'555-5678'},
+                         {name:'Julie', phone:'555-8765'},
+                         {name:'Juliette', phone:'555-5678'}];
+    $scope.contacts = [0,1];
+	$scope.show=function(t){
+showDialog({
+            text: '<div>\r\n<h5><i class=\"fa fa-pencil-square-o\" aria-hidden=\"true\"><\/i>Patient Details [ID:'+$scope.friends[t].id+']<\/h5>\r\n\t\t\t<hr class=\"soften\"\/>\r\n <div class=\"mdl-cell mdl-cell--12-col\" style=\"margin:0px auto\">\r\n       <div class=\"mdl-grid \">\r\n<div align=\"left\" class=\"mdl-cell mdl-cell--6-col\"><strong>First Name<\/strong>:'+ $scope.friends[t].fname+'<\/div>\r\n<div align=\"left\" class=\"mdl-cell mdl-cell--6-col\"><strong>Last Name<\/strong>:'+ $scope.friends[t].lname+'<\/div>\r\n            <\/div>\r\n       <div class=\"mdl-grid \">\r\n<div align=\"left\" class=\"mdl-cell mdl-cell--6-col\"><strong>Gender<\/strong>:'+ $scope.friends[t].gender+'<\/div>\r\n<div align=\"left\" class=\"mdl-cell mdl-cell--6-col\"><strong>Date of Birth<\/strong>:'+ $scope.friends[t].dob+'<\/div>\r\n            <\/div>\r\n\r\n  <div class=\"mdl-grid \">\r\n<div align=\"left\" class=\"mdl-cell mdl-cell--6-col\"><strong>Contact 1<\/strong>:'+ $scope.friends[t].contact+'<\/div>\r\n<div align=\"left\" class=\"mdl-cell mdl-cell--6-col\"><strong>Contact 2<\/strong>:'+ $scope.friends[t].acontact+'<\/div>\r\n            <\/div>\r\n  <div class=\"mdl-grid \">\r\n<div align=\"left\" class=\"mdl-cell mdl-cell--3-col\"><strong>Details<\/strong><\/div>\r\n<div align=\"left\" class=\"mdl-cell mdl-cell--9-col\">'+ $scope.friends[t].brief+'<\/div>\r\n            <\/div>\r\n\r\n      <\/div>\r\n\r\n<\/div>'
+			,negative: {
+                title: '<i class="fa fa-wrong" aria-hidden="true"></i>Close',
+                onClick: function (e) {
+					 $("html").css("overflow-y", "scroll");
+					 
+                }
+            },
+			
+            cancelable: false
+        });	
+}
+	 $http
+      .get('api/fetch/patientdata').then(function(response) {
+ 
+
+		  if(response.data.error==0){ 
+		toast('Fetching Data...');
+		$scope.friends=response.data.users; 
+   
+	
+		}
+		 // alert(response.data.error);
+        }, function(response) {
+          $scope.data = response.data || 'Request failed';
+          $scope.status = response.status;
+      });
+	      
+        transclude: true
+        $scope.del_cont = function(i){
+			var index = $scope.contacts.indexOf(i);
+      console.log(index + "to deleted" +i);
+	  
+    	$scope.contacts.splice(index,1);
+		console.log($scope.contacts.toString());
+  }
+        $scope.add_cont = function () {
+          $scope.contacts.push(ccoun);
+		  console.log(ccoun++);
+		  
+        };
+		var transform = function(data){
+        return $.param(data); 
+    }
+
+}).filter('ageFilter', function () {
+    function calculateAge (birthday) { // birthday is a date
+        var date = new Date(birthday);
+        var ageDifMs = Date.now() - date.getTime();
+        var ageDate = new Date(ageDifMs); // miliseconds from epoch
+        return Math.abs(ageDate.getUTCFullYear() - 1970);
+    }
+
+    return function (birthdate) {
+        return calculateAge(birthdate);
+    };
+});
+
+
+app.controller('loginCtrl', function ($scope, $http, $location,$window) {
+var ccoun=2;
+    $scope.contacts = [0,1];
+        $scope.del_cont = function(i){
+			var index = $scope.contacts.indexOf(i);
+      console.log(index + "to deleted" +i);
+	  
+    	$scope.contacts.splice(index,1);
+		console.log($scope.contacts.toString());
+  }
+        $scope.add_cont = function () {
+          $scope.contacts.push(ccoun);
+		  console.log(ccoun++);
+		  
+        };
+	$scope.AgeFunction = function(){ //your function goes here
+	
+var date = new Date($scope.user.dob);
+        var ageDifMs = Date.now() - date.getTime();
+        var ageDate = new Date(ageDifMs); // miliseconds from epoch
+        $scope.user.age=Math.abs(ageDate.getUTCFullYear() - 1970);
+	
+	
+	
+}	
+
+	  //$scope.classa = "mdl-r";
+  $scope.add = function () {
+	  
+	 var err=0;
+if ($scope.aa.$invalid) {
+    angular.forEach($scope.aa.$error, function (field) {
+        angular.forEach(field, function(errorField){
+            errorField.$setTouched();
+			err=1;
+        })
+    });
+}
+if(err==1){alert("error"); return;}
+var transform = function(data){
+        return $.param(data); 
+    }
+    $http
+      .post('api/register', $scope.user, {
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+    },
+	transformRequest:transform
+}).then(function(response) {
+ 
+
+		  if(response.data.error==0){ 
+		$location.path( "step3",false);
+		toast('<i class="fa fa-check" aria-hidden="true"></i> New Patient Information Added successfully');
+		}
+		 // alert(response.data.error);
+        }, function(response) {
+          $scope.data = response.data || 'Request failed';
+          $scope.status = response.status;
+      });
+	      
+        transclude: true
+  
+};
+app.run( function($route , $location)  {
+$route.reload();
+  
+});
+});
+
+
+function toast(txt) {
+    var x = document.getElementById("snackbar")
+	x.innerHTML=txt;
+    x.className = "show";
+    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 5000);
+}
+</script>
+<div id="snackbar">Default message..</div> 
+	  <!--------------------------------->
+   </body>
+</html>
